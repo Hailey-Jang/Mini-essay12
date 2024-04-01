@@ -1,0 +1,88 @@
+--- 
+title: "Exploring the Human Cost of Auschwitz Through Interactive Data Analysis"
+thanks: "Code and data supporting this analysis are available at: https://github.com/Hailey-Jang/Mini-essay12.git"
+author: 
+  - Hailey Jang
+date: today
+date-format: long
+abstract: "This study explores the profound human toll of Auschwitz through interactive data visualization, aiming to humanize the stark statistics of Holocaust victims. By integrating detailed data analysis with the narratives of those who suffered, it highlights the importance of remembering individual stories within the broader historical context. This approach not only pays tribute to the victims but also emphasizes the role of ethical research and public engagement in ensuring the atrocities of Auschwitz are never forgotten, fostering a deeper, more empathetic understanding of this dark chapter in history."
+format: pdf
+number-sections: true
+bibliography: references.bib
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(rstanarm)
+```
+
+# Introduction
+
+Auschwitz is a haunting emblem of the Holocaust's atrocities, marking the site where countless lives were brutally extinguished. Our investigation into Auschwitz's deportation and victim data seeks to shed light on the individual stories obscured by sheer numbers, ensuring the sacrifices of those who endured these horrors are remembered and honored. This study leverages resources like @citeR, @rohan, and @rstanarm, alongside a Shiny app.
+
+# Data {#sec-data}
+
+This analysis draws on data detailing the ethnic backgrounds and the number of individuals who perished at Auschwitz, sourced from @Liberation_Auschwitz_2015. It includes specifics on victims' nationalities, the total number of deportations, the percentage of deported individuals who died, and the overall share of victims by their ethnic or national background.
+
+Utilizing this dataset, we've constructed a series of interactive visualizations in Shiny app to facilitate an engaging examination of the demographic makeup and fate of Auschwitz's victims, providing a deeper understanding of the Holocaust's impact. 
+
+```{r}
+#| echo: false
+
+library(ggplot2)
+
+# Compiling a data frame from the dataset
+data <- data.frame(
+  Nationality = c("Jews", "Poles", "Other groups", "Roma (Gypsies)", "Soviet POWs"),
+  Number_of_Deportees = c(1100000, 140000, 25000, 23000, 15000),
+  Percentage_of_Total_Deportees = c(85, 10.8, 1.9, 1.6, 1.2),
+  Number_of_Victims = c(1000000, 70000, 12000, 21000, 14000),
+  Percentage_of_Murdered = c(90, 46, 48, 91.3, 93),
+  Percentage_of_All_Victims = c(91, 5.8, 1, 1.7, 1.3)
+)
+```
+
+The developed Shiny app allows users to explore diverse data models, as demonstrated in @fig-deportees, enhancing the website experience [Shiny app link](https://086fze-haile0ly.shinyapps.io/holocaust/).
+
+```{r}
+#| label: fig-deportees
+#| fig-cap: The Relationship between Nationality and Number of Deportees & Victims
+#| echo: false
+
+# Exploring the connection between nationality and the number of deportees and victims
+ggplot(data, aes(x = Nationality)) +
+  geom_bar(aes(y = Number_of_Deportees, fill = "Deportees"), stat = "identity") +
+  geom_bar(aes(y = Number_of_Victims, fill = "Victims"), stat = "identity", position = "dodge") +
+  ylab("Total Count") +
+  ggtitle("Deportees and Victims by Nationality") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_manual(values = c("Deportees" = "green", "Victims" = "yellow"),
+                    guide = guide_legend(title = "Key"))
+```
+
+# Discussion
+
+Drawing insights from @Bouie_2022, we delve into aspects connecting the Auschwitz victims' experiences with broader historical contexts.
+
+## Bringing Numbers to Life {#sec-first-point}
+
+The data underscores the extensive scale of tragedy at Auschwitz, with over 1.3 million deported and 1.1 million killed. Each figure reflects individual stories of struggle and despair, emphasizing the importance of remembering the human aspects behind these numbers.
+
+## Ethical Engagement with Sensitive Data
+
+Studying Auschwitz demands a sensitive approach to its data, recognizing the deep trauma associated with these figures. It's vital to handle this information with care, ensuring the dignity of the victims and their families is respected in all research efforts.
+
+## Enhancing Awareness and Understanding
+
+Efforts to document and share information about Auschwitz are essential for education and remembrance. It's important these endeavors are undertaken with the utmost respect for the victims, using platforms like the Shiny app to promote empathy and understanding, ensuring the atrocities of Auschwitz are never forgotten.
+
+## Conclusion
+
+Reflecting on Auschwitz's data compels us to see beyond the numbers, recognizing the individual lives marked by tragedy. Through thoughtful analysis, ethical research practices, and a commitment to remembering the past, we pay homage to those who suffered in Auschwitz, pledging to carry forward their stories with dignity and respect.
+
+\newpage
+## Referecnes
